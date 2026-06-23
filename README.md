@@ -27,7 +27,6 @@ aws-quizz/
 │   ├── runtime-config.js  # Runtime configuration
 │   └── styles.css         # Global styling
 ├── package.json           # Dependencies and scripts
-├── netlify.toml           # Netlify deployment configuration
 └── README.md              # This file
 ```
 
