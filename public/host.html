@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Host - AWS CLF-C02 Quiz</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="host-body">
+    <main class="host-layout">
+      <section class="card">
+        <h1>Console Host</h1>
+        <p>Fais scanner le QR code pour que les joueurs rejoignent la partie.</p>
+        <div class="qr-wrapper">
+          <img id="qrImage" alt="QR code d'acces" />
+          <p><a id="joinLink" href="#" target="_blank" rel="noreferrer"></a></p>
+          <p>
+            Ecran public: <a id="displayLink" href="#" target="_blank" rel="noreferrer"></a>
+          </p>
+        </div>
+        <div class="row gap">
+          <button id="startBtn">Demarrer le quiz</button>
+          <button id="nextBtn" disabled>Question suivante</button>
+          <button id="restartBtn">Recommencer</button>
+        </div>
+        <p id="hostState"></p>
+      </section>
+
+      <section class="card">
+        <div class="row between">
+          <h2 id="hostQuestionTitle">En attente...</h2>
+          <span id="hostTimer" class="timer">60s</span>
+        </div>
+        <p id="hostQuestionText">Lance la partie pour afficher la premiere question.</p>
+        <p id="hostMeta" class="muted"></p>
+        <p id="hostCorrect" class="highlight"></p>
+        <div id="hostExplanation" class="card explanation-card hidden">
+          <h3>Pourquoi?</h3>
+          <p id="hostExplanationText" class="explanation-text"></p>
+        </div>
+        <div id="hostCelebration" class="celebration hidden">
+          <p id="hostCelebrationText" class="winner">Perfect round: tout le monde a repondu juste.</p>
+          <img id="hostCelebrationGif" class="celebration-gif" alt="GIF celebration" />
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="row between">
+          <h2>Reponses en direct</h2>
+          <div class="row gap stat-chips">
+            <span id="correctCountChip" class="chip chip-good">0 correct</span>
+            <span id="wrongCountChip" class="chip chip-bad">0 faux</span>
+            <span id="pendingCountChip" class="chip chip-pending">0 attente</span>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Pseudo</th>
+              <th>Reponse</th>
+              <th>Statut</th>
+              <th>Temps</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody id="hostAnswersBody"></tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>Classement</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Pseudo</th>
+              <th>Score</th>
+              <th>Dernier gain</th>
+            </tr>
+          </thead>
+          <tbody id="hostLeaderboardBody"></tbody>
+        </table>
+      </section>
+
+      <section id="hostPodiumCard" class="card hidden">
+        <h2>Podium de la Question</h2>
+        <div class="podium-grid">
+          <article id="hostPodiumSecond" class="podium-slot podium-second">
+            <span class="podium-rank">2</span>
+            <p class="podium-name">-</p>
+            <p class="podium-score">0 pts</p>
+          </article>
+          <article id="hostPodiumFirst" class="podium-slot podium-first">
+            <span class="podium-rank">1</span>
+            <p class="podium-name">-</p>
+            <p class="podium-score">0 pts</p>
+          </article>
+          <article id="hostPodiumThird" class="podium-slot podium-third">
+            <span class="podium-rank">3</span>
+            <p class="podium-name">-</p>
+            <p class="podium-score">0 pts</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Joueurs connectes</h2>
+        <p id="playerCount">0 joueur</p>
+        <ul id="playersList" class="players-list"></ul>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>by Antoine Cichowicz</span>
+      <a href="https://github.com/czantoine" target="_blank" rel="noreferrer">github.com/czantoine</a>
+    </footer>
+
+    <script src="/runtime-config.js"></script>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" crossorigin="anonymous"></script>
+    <script src="/host.js"></script>
+  </body>
+</html>

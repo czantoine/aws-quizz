@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presentation Quiz AWS</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="display-body">
+    <main class="display-layout">
+      <section id="displayLobbyCard" class="card lobby-card">
+        <h2>Lobby Quiz</h2>
+        <p id="displayLobbyText" class="muted">En attente du lancement par le presentateur...</p>
+        <p id="displayLobbyCount" class="winner">0 joueur(s) connecte(s)</p>
+        <ul id="displayLobbyPlayers" class="players-list"></ul>
+      </section>
+
+      <section class="card display-hero">
+        <div class="row between">
+          <h1 id="displayTitle">Quiz AWS CLF-C02</h1>
+          <span id="displayTimer" class="timer">60s</span>
+        </div>
+        <p id="displaySubtitle" class="muted">En attente du demarrage...</p>
+        <div id="displayFireBanner" class="fire-banner hidden" aria-live="polite">
+          <span class="fire-icon" aria-hidden="true">🔥</span>
+          <strong id="displayFireText">ON FIRE</strong>
+        </div>
+      </section>
+
+      <section id="displayQuestionCard" class="card">
+        <h2 id="displayQuestion">Le quiz va commencer dans un instant.</h2>
+        <p id="displayProgress" class="muted"></p>
+        <div id="displayOptions" class="answers-grid"></div>
+        <div id="displayCelebration" class="celebration hidden">
+          <p id="displayCelebrationText" class="winner">Perfect round! Vous etes trop forts.</p>
+          <img id="displayCelebrationGif" class="celebration-gif" alt="GIF celebration" />
+        </div>
+      </section>
+
+      <section id="displayLeaderboardCard" class="card">
+        <div class="row between">
+          <h2>Classement Live</h2>
+          <span id="displayPhase" class="badge">Lobby</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Pseudo</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="displayLeaderboardBody"></tbody>
+        </table>
+      </section>
+
+      <section id="displayPodiumCard" class="card hidden">
+        <h2>Podium de la Question</h2>
+        <div class="podium-grid">
+          <article id="displayPodiumSecond" class="podium-slot podium-second">
+            <span class="podium-rank">2</span>
+            <img class="avatar avatar-podium" alt="Avatar 2" />
+            <p class="podium-name">-</p>
+            <p class="podium-score">0 pts</p>
+          </article>
+          <article id="displayPodiumFirst" class="podium-slot podium-first">
+            <span class="podium-rank">1</span>
+            <img class="avatar avatar-podium" alt="Avatar 1" />
+            <p class="podium-name">-</p>
+            <p class="podium-score">0 pts</p>
+          </article>
+          <article id="displayPodiumThird" class="podium-slot podium-third">
+            <span class="podium-rank">3</span>
+            <img class="avatar avatar-podium" alt="Avatar 3" />
+            <p class="podium-name">-</p>
+            <p class="podium-score">0 pts</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="displayWinnerCard" class="card hidden">
+        <h2 class="winner-title">Champion du Quiz <span class="winner-crown">👑</span></h2>
+        <p id="displayWinnerText" class="winner winner-text"></p>
+        <div class="winner-aura" aria-hidden="true"></div>
+        <div class="confetti" aria-hidden="true"></div>
+      </section>
+
+      <div id="reactionStream" class="reaction-stream" aria-live="polite"></div>
+      <div id="fireParticles" class="fire-particles" aria-hidden="true"></div>
+    </main>
+
+    <footer class="app-footer">
+      <span>by Antoine Cichowicz</span>
+      <a href="https://github.com/czantoine" target="_blank" rel="noreferrer">github.com/czantoine</a>
+    </footer>
+
+    <script src="/runtime-config.js"></script>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" crossorigin="anonymous"></script>
+    <script src="/display.js"></script>
+  </body>
+</html>

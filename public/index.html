@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS CLF-C02 Quiz Live</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="player-body">
+    <main class="app-shell">
+      <section id="joinCard" class="card">
+        <h1>AWS Quiz Live</h1>
+        <p>Entre ton pseudo pour rejoindre la partie.</p>
+        <form id="joinForm" class="stack">
+          <input id="nicknameInput" maxlength="20" placeholder="Ton pseudo" required />
+          <button type="submit">Rejoindre</button>
+        </form>
+        <p id="joinError" class="error"></p>
+      </section>
+
+      <section id="waitingCard" class="card hidden">
+        <h2>En attente du host...</h2>
+        <p id="welcomeText"></p>
+        <p>Le quiz demarre bientot. Reste connecte.</p>
+      </section>
+
+      <section id="questionCard" class="card hidden">
+        <div class="row between">
+          <span id="questionCategory" class="badge"></span>
+          <span id="timer" class="timer">60s</span>
+        </div>
+        <h2 id="questionText"></h2>
+        <p id="questionProgress" class="muted"></p>
+        <div id="answersGrid" class="answers-grid"></div>
+        <p id="answerState" class="muted"></p>
+      </section>
+
+      <section id="reviewCard" class="card hidden">
+        <h2>Resultat de la question</h2>
+        <p id="reviewResult"></p>
+        <p id="reviewCorrect"></p>
+        <h3>Classement live</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Pseudo</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardBody"></tbody>
+        </table>
+      </section>
+
+      <section id="finalCard" class="card hidden">
+        <h2>Fin du quiz</h2>
+        <p id="winnerMessage" class="winner"></p>
+        <div class="confetti" aria-hidden="true"></div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Pseudo</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="finalLeaderboardBody"></tbody>
+        </table>
+      </section>
+
+      <section id="reactionCard" class="card hidden reaction-card">
+        <h3>Reactions live</h3>
+        <div class="row gap reaction-buttons">
+          <button type="button" class="reaction-btn" data-reaction="cat" aria-label="Reaction chat">🐱</button>
+          <button type="button" class="reaction-btn" data-reaction="thumbs_up" aria-label="Reaction pouce en l'air">👍</button>
+          <button type="button" class="reaction-btn" data-reaction="thumbs_down" aria-label="Reaction pouce en bas">👎</button>
+        </div>
+        <p id="reactionState" class="muted">Envoie une reaction, elle s'affiche sur l'ecran public.</p>
+      </section>
+
+      <div id="playerFireBanner" class="fire-banner player-fire-banner hidden" aria-live="polite">
+        <span class="fire-icon" aria-hidden="true">🔥</span>
+        <strong id="playerFireText">Tu es en feu !</strong>
+      </div>
+      <div id="playerFireParticles" class="fire-particles" aria-hidden="true"></div>
+    </main>
+
+    <footer class="app-footer">
+      <span>by Antoine Cichowicz</span>
+      <a href="https://github.com/czantoine" target="_blank" rel="noreferrer">github.com/czantoine</a>
+    </footer>
+
+    <script src="/runtime-config.js"></script>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" crossorigin="anonymous"></script>
+    <script src="/player.js"></script>
+  </body>
+</html>
