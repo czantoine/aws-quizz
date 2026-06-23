@@ -97,6 +97,8 @@ The server will start on `http://localhost:3000`
 
 ## Configuration
 
+### Server Configuration
+
 Key constants in `server.js`:
 
 - `DEFAULT_PORT` - Server port (default: 3000)
@@ -105,15 +107,73 @@ Key constants in `server.js`:
 - `FIRE_STREAK_MIN` - Minimum streak for fire emoji (default: 2)
 - `FIRE_STREAK_SUPER` - Super streak threshold (default: 3)
 
-## Deployment
+### Socket.io URL Configuration
 
-This project is configured for Netlify deployment:
+Update the backend URL in `public/runtime-config.js`:
 
-```bash
-npm run build
+```javascript
+window.APP_CONFIG = {
+  SOCKET_URL: "https://your-backend-url.onrender.com"  // Update with your Render backend URL
+};
 ```
 
-The `netlify.toml` file handles routing for the single-page application.
+## Architecture
+
+This project uses a **separated architecture**:
+
+- **Frontend** (Static): Deployed on **Netlify** at https://aws-quizz.netlify.app
+  - HTML, CSS, JavaScript files
+  - Communicates with backend via Socket.io
+  
+- **Backend** (Node.js Server): Deployed on **Render** at https://aws-quizz.onrender.com
+  - Express server with Socket.io
+  - Handles real-time quiz logic
+  - Manages player connections and quiz state
+
+## Deployment
+
+### Backend (Render)
+
+1. Push your code to GitHub
+2. Connect your repository to Render.com
+3. Create a new Web Service:
+   - Select your GitHub repository
+   - Build command: `npm install`
+   - Start command: `node server.js`
+   - Set `PORT` environment variable to `3000` (or let Render auto-assign)
+4. Deploy and get your backend URL (e.g., `https://aws-quizz.onrender.com`)
+
+### Frontend (Netlify)
+
+1. Update `public/runtime-config.js` with your Render backend URL
+2. Push to GitHub
+3. Connect your repository to Netlify.com
+4. Deploy settings:
+   - Build command: (leave empty - static files only)
+   - Publish directory: `public`
+5. The `netlify.toml` file handles routing for the single-page application
+
+### Local Development
+
+To test the full stack locally:
+
+1. Start the backend server:
+```bash
+npm run dev
+```
+
+2. In `public/runtime-config.js`, set:
+```javascript
+window.APP_CONFIG = {
+  SOCKET_URL: "http://localhost:3000"
+};
+```
+
+3. Serve the frontend (using any local server):
+```bash
+# Example with Python
+python -m http.server 8000 --directory public
+```
 
 ## Technologies
 
