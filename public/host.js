@@ -13,6 +13,7 @@ const hostState = document.getElementById("hostState");
 const hostQuestionTitle = document.getElementById("hostQuestionTitle");
 const hostQuestionText = document.getElementById("hostQuestionText");
 const hostMeta = document.getElementById("hostMeta");
+const hostQuestionModeHint = document.getElementById("hostQuestionModeHint");
 const hostCorrect = document.getElementById("hostCorrect");
 const hostTimer = document.getElementById("hostTimer");
 const hostCelebration = document.getElementById("hostCelebration");
@@ -87,6 +88,7 @@ socket.on("state:update", (state) => {
     hostQuestionTitle.textContent = "En attente...";
     hostQuestionText.textContent = "Lance la partie pour afficher la premiere question.";
     hostMeta.textContent = "";
+    hostQuestionModeHint.classList.add("hidden");
     hostCorrect.textContent = "";
     hostCelebration.classList.add("hidden");
     hostPodiumCard.classList.add("hidden");
@@ -99,6 +101,7 @@ socket.on("state:update", (state) => {
   if (state.phase === "finished") {
     hostQuestionTitle.textContent = "Quiz termine";
     hostMeta.textContent = "";
+    hostQuestionModeHint.classList.add("hidden");
     hostCorrect.textContent = "Un nouveau champion est ne.";
     hostCelebration.classList.add("hidden");
     renderPodium(state.leaderboard || []);
@@ -112,6 +115,12 @@ socket.on("host:question:full", (payload) => {
   hostQuestionTitle.textContent = `Question ${payload.index + 1}/${payload.total}`;
   hostQuestionText.textContent = payload.text;
   hostMeta.textContent = `Categorie: ${payload.category}`;
+  if (Number(payload.minSelections || 1) > 1) {
+    hostQuestionModeHint.textContent = "Plusieurs reponses possibles";
+    hostQuestionModeHint.classList.remove("hidden");
+  } else {
+    hostQuestionModeHint.classList.add("hidden");
+  }
   hostCorrect.textContent = "";
   hostCelebration.classList.add("hidden");
   hostPodiumCard.classList.add("hidden");
@@ -168,6 +177,7 @@ socket.on("game:finished", (payload) => {
   hostQuestionTitle.textContent = "Podium final";
   hostQuestionText.textContent = payload.message;
   hostMeta.textContent = "";
+  hostQuestionModeHint.classList.add("hidden");
 
   if (payload.winner) {
     hostCorrect.textContent = `Trop fort ${payload.winner.nickname}, score final ${payload.winner.score} points.`;
@@ -183,6 +193,7 @@ socket.on("game:reset", () => {
   stopCountdown();
   hostTimer.textContent = `${currentDuration}s`;
   hostCelebration.classList.add("hidden");
+  hostQuestionModeHint.classList.add("hidden");
   hostPodiumCard.classList.add("hidden");
   hostAnswersBody.innerHTML = "";
   seenAnswerPlayerIds = new Set();

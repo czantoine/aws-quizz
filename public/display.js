@@ -9,6 +9,7 @@ const displayLobbyCount = document.getElementById("displayLobbyCount");
 const displayLobbyPlayers = document.getElementById("displayLobbyPlayers");
 const displayQuestion = document.getElementById("displayQuestion");
 const displayProgress = document.getElementById("displayProgress");
+const displayQuestionModeHint = document.getElementById("displayQuestionModeHint");
 const displayOptions = document.getElementById("displayOptions");
 const displayTimer = document.getElementById("displayTimer");
 const displayPhase = document.getElementById("displayPhase");
@@ -45,6 +46,7 @@ socket.on("state:update", (state) => {
     displaySubtitle.textContent = "Les joueurs se connectent...";
     displayQuestion.textContent = "Le quiz va commencer dans un instant.";
     displayProgress.textContent = `${state.connectedPlayers} joueur(s) connecte(s)`;
+    displayQuestionModeHint.classList.add("hidden");
     displayOptions.innerHTML = "";
     displayCelebration.classList.add("hidden");
     displayPodiumCard.classList.add("hidden");
@@ -62,6 +64,12 @@ socket.on("question:start", (payload) => {
   displaySubtitle.textContent = "Repondez vite: la rapidite donne plus de points.";
   displayQuestion.textContent = payload.text;
   displayProgress.textContent = `Question ${payload.index + 1} / ${payload.total}`;
+  if (Number(payload.minSelections || 1) > 1) {
+    displayQuestionModeHint.textContent = "Plusieurs reponses possibles";
+    displayQuestionModeHint.classList.remove("hidden");
+  } else {
+    displayQuestionModeHint.classList.add("hidden");
+  }
   renderOptions(payload.options);
   displayCelebration.classList.add("hidden");
   displayPodiumCard.classList.add("hidden");
@@ -101,6 +109,7 @@ socket.on("game:finished", (payload) => {
   displaySubtitle.textContent = "Merci a tous pour la partie.";
   displayQuestion.textContent = payload.message;
   displayProgress.textContent = "";
+  displayQuestionModeHint.classList.add("hidden");
   displayOptions.innerHTML = "";
   displayCelebration.classList.add("hidden");
   hideFireBanner();
@@ -126,6 +135,7 @@ socket.on("game:reset", () => {
   displaySubtitle.textContent = "Nouvelle partie en preparation...";
   displayQuestion.textContent = "Pret pour une nouvelle manche ?";
   displayProgress.textContent = "";
+  displayQuestionModeHint.classList.add("hidden");
   displayOptions.innerHTML = "";
   displayCelebration.classList.add("hidden");
   displayPodiumCard.classList.add("hidden");
