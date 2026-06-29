@@ -72,7 +72,7 @@ socket.on("question:start", (payload) => {
 socket.on("question:ended", (payload) => {
   stopCountdown();
   displaySubtitle.textContent = `Bonne reponse: ${payload.correctAnswer}`;
-  highlightCorrectOption(payload.correctIndex);
+  highlightCorrectOption(payload.correctIndices || [payload.correctIndex]);
 
   if (payload.allCorrect && payload.celebrationGif) {
     displayCelebrationText.textContent = `${payload.roundTitle}: ${payload.roundMessage}`;
@@ -231,12 +231,13 @@ function renderOptions(options) {
   });
 }
 
-function highlightCorrectOption(correctIndex) {
+function highlightCorrectOption(correctIndices) {
+  const correctSet = new Set((correctIndices || []).map((value) => Number(value)));
   const nodes = displayOptions.querySelectorAll(".display-option");
   nodes.forEach((node) => {
     const optionIndex = Number(node.dataset.optionIndex);
     node.classList.remove("display-option-correct", "display-option-dim");
-    if (optionIndex === correctIndex) {
+    if (correctSet.has(optionIndex)) {
       node.classList.add("display-option-correct");
     } else {
       node.classList.add("display-option-dim");

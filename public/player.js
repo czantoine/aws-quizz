@@ -15,6 +15,7 @@ const welcomeText = document.getElementById("welcomeText");
 const questionCategory = document.getElementById("questionCategory");
 const questionText = document.getElementById("questionText");
 const questionProgress = document.getElementById("questionProgress");
+const questionModeHint = document.getElementById("questionModeHint");
 const answersGrid = document.getElementById("answersGrid");
 const timerEl = document.getElementById("timer");
 const answerState = document.getElementById("answerState");
@@ -37,6 +38,9 @@ let myNickname = "";
 let countdownInterval = null;
 let questionLocked = false;
 let lastReactionAt = 0;
+let selectedAnswerIndices = new Set();
+let submitAnswerButton = null;
+let currentMinSelections = 1;
 
 reactionButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -71,6 +75,10 @@ socket.on("player:error", (msg) => {
   joinError.textContent = msg;
 });
 
+socket.on("player:answer:error", (msg) => {
+  answerState.textContent = msg;
+});
+
 socket.on("player:joined", ({ id, nickname }) => {
   myPlayerId = id;
   myNickname = nickname;
@@ -100,37 +108,93 @@ socket.on("question:start", (payload) => {
   }
 
   questionLocked = false;
+  selectedAnswerIndices = new Set();
+  submitAnswerButton = null;
+  currentMinSelections = Number(payload.minSelections || 1);
   hidePlayerFire();
-  answerState.textContent = "Choisis vite, plus tu reponds rapidement, plus tu marques de points.";
+  answerState.textContent = `Coche au moins ${currentMinSelections} reponse(s), puis valide.`;
   reviewResult.textContent = "";
   reviewCorrect.textContent = "";
 
   questionCategory.textContent = payload.category;
   questionText.textContent = payload.text;
   questionProgress.textContent = `Question ${payload.index + 1} / ${payload.total}`;
+  if (currentMinSelections > 1) {
+    questionModeHint.textContent = "Plusieurs reponses possibles";
+    questionModeHint.classList.remove("hidden");
+  } else {
+    questionModeHint.classList.add("hidden");
+  }
 
   answersGrid.innerHTML = "";
+  const hint = document.createElement("p");
+  hint.className = "muted answer-hint";
+  hint.textContent = `Selection minimale: ${currentMinSelections}`;
+  answersGrid.appendChild(hint);
+
+  const choicesWrap = document.createElement("div");
+  choicesWrap.className = "answer-options";
   payload.options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.className = "answer-btn";
-    button.textContent = option;
-    button.addEventListener("click", () => {
+    const label = document.createElement("label");
+    label.className = "answer-choice";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = String(index);
+    checkbox.addEventListener("change", () => {
       if (questionLocked) {
+        checkbox.checked = false;
         return;
       }
-      questionLocked = true;
-      lockAnswerButtons();
-      socket.emit("player:answer", { answerIndex: index });
+
+      if (checkbox.checked) {
+        selectedAnswerIndices.add(index);
+      } else {
+        selectedAnswerIndices.delete(index);
+      }
+
+      updateSubmitButtonState();
     });
-    answersGrid.appendChild(button);
+
+    const text = document.createElement("span");
+    text.textContent = option;
+
+    label.append(checkbox, text);
+    choicesWrap.appendChild(label);
   });
+
+  answersGrid.appendChild(choicesWrap);
+
+  const actionRow = document.createElement("div");
+  actionRow.className = "answer-action-row";
+  submitAnswerButton = document.createElement("button");
+  submitAnswerButton.type = "button";
+  submitAnswerButton.className = "answer-submit";
+  submitAnswerButton.addEventListener("click", () => {
+    if (questionLocked) {
+      return;
+    }
+
+    const answerIndices = [...selectedAnswerIndices].sort((a, b) => a - b);
+    if (answerIndices.length < currentMinSelections) {
+      answerState.textContent = `Coche au moins ${currentMinSelections} reponse(s).`;
+      return;
+    }
+
+    questionLocked = true;
+    lockAnswerButtons();
+    socket.emit("player:answer", { answerIndices });
+  });
+  actionRow.appendChild(submitAnswerButton);
+  answersGrid.appendChild(actionRow);
+  updateSubmitButtonState();
 
   startCountdown(payload.startedAt, payload.durationSeconds);
   showOnly(questionCard);
 });
 
 socket.on("player:answer:accepted", ({ isCorrect, points }) => {
-  const short = isCorrect ? `Bonne reponse, +${points} points.` : "Mauvaise reponse, 0 point.";
+  const short = isCorrect ? `Bonne combinaison, +${points} points.` : "Mauvaise combinaison, 0 point.";
   answerState.textContent = `${short} Attends la fin du chrono.`;
 });
 
@@ -200,10 +264,20 @@ function stopCountdown() {
 }
 
 function lockAnswerButtons() {
-  const buttons = answersGrid.querySelectorAll("button");
-  buttons.forEach((button) => {
-    button.disabled = true;
+  const controls = answersGrid.querySelectorAll("button, input");
+  controls.forEach((control) => {
+    control.disabled = true;
   });
+}
+
+function updateSubmitButtonState() {
+  if (!submitAnswerButton) {
+    return;
+  }
+
+  const count = selectedAnswerIndices.size;
+  submitAnswerButton.textContent = `Valider (${count}/${currentMinSelections})`;
+  submitAnswerButton.disabled = questionLocked || count < currentMinSelections;
 }
 
 function ordinal(num) {

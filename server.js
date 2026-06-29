@@ -357,16 +357,94 @@ const funQuestions = [
   }
 ];
 
+const advancedMultiQuestions = [
+  {
+    id: "s2-multi-1",
+    text: "Tu dois durcir un VPC pour une appli web. Quels controles reseau sont pertinents ?",
+    options: ["Security Groups", "Network ACL", "AWS WAF", "Route 53", "IAM Users"],
+    correctIndices: [0, 1, 2],
+    minSelections: 2,
+    explanation: "Security Groups et NACL filtrent le reseau; WAF protege la couche HTTP(S).",
+    category: "AWS"
+  },
+  {
+    id: "s2-multi-2",
+    text: "Pour connecter un datacenter on-premise a AWS, quelles options sont valides ?",
+    options: ["AWS Site-to-Site VPN", "AWS Direct Connect", "AWS Client VPN", "Amazon S3 Transfer Acceleration", "AWS Artifact"],
+    correctIndices: [0, 1, 2],
+    minSelections: 2,
+    explanation: "Site-to-Site VPN et Direct Connect sont des options classiques; Client VPN couvre les acces utilisateurs distants.",
+    category: "AWS"
+  },
+  {
+    id: "s2-multi-3",
+    text: "Sur la gouvernance et l'audit, quels services sont les plus utiles ?",
+    options: ["AWS Organizations", "AWS CloudTrail", "AWS Config", "Amazon CloudFront", "Amazon Polly"],
+    correctIndices: [0, 1, 2],
+    minSelections: 2,
+    explanation: "Organizations structure les comptes, CloudTrail audite les actions et Config suit la conformite des ressources.",
+    category: "AWS"
+  },
+  {
+    id: "s2-multi-4",
+    text: "Pour ameliorer la disponibilite d'une appli web mondiale, quels choix sont pertinents ?",
+    options: ["Elastic Load Balancing", "Auto Scaling", "Route 53 failover", "Amazon GuardDuty", "Amazon Macie"],
+    correctIndices: [0, 1, 2],
+    minSelections: 2,
+    explanation: "ELB, Auto Scaling et Route 53 failover renforcent disponibilite et reprise sur incident.",
+    category: "AWS"
+  },
+  {
+    id: "s2-multi-5",
+    text: "Pour la securite des donnees et des secrets, quels services sont adaptes ?",
+    options: ["AWS KMS", "AWS Secrets Manager", "IAM Roles", "Amazon CloudWatch", "Amazon Route 53"],
+    correctIndices: [0, 1, 2],
+    minSelections: 2,
+    explanation: "KMS gere les cles, Secrets Manager les secrets applicatifs et les roles IAM evitent les credentials statiques.",
+    category: "AWS"
+  },
+  {
+    id: "s2-multi-6",
+    text: "En cas d'incident critique, quels elements du support AWS sont les plus utiles ?",
+    options: ["Support Center", "Enterprise Support", "Technical Account Manager", "AWS Budgets", "AWS Snowcone"],
+    correctIndices: [0, 1, 2],
+    minSelections: 2,
+    explanation: "Support Center ouvre le case, Enterprise Support apporte la priorite et le TAM accompagne les operations critiques.",
+    category: "AWS"
+  },
+  {
+    id: "s2-multi-7",
+    text: "Pour exposer un service de maniere privee entre comptes, quels mecanismes sont valides ?",
+    options: ["AWS PrivateLink", "VPC Peering", "Transit Gateway", "Amazon CloudFront", "AWS Backup"],
+    correctIndices: [0, 1, 2],
+    minSelections: 2,
+    explanation: "PrivateLink, VPC Peering et Transit Gateway sont des options reseau privees selon le pattern de connectivite.",
+    category: "AWS"
+  }
+];
+
 function buildQuiz() {
+  const removedEasyIds = new Set([
+    "s2-aws-1",
+    "s2-aws-2",
+    "s2-aws-3",
+    "s2-aws-4",
+    "s2-aws-5",
+    "s2-aws-6",
+    "s2-aws-7"
+  ]);
+  const curatedAws = awsQuestions.filter((question) => !removedEasyIds.has(question.id));
+  const mixedAws = [...curatedAws, ...advancedMultiQuestions];
+
   return [
     funQuestions[0],
-    ...awsQuestions.slice(0, 5),
+    ...mixedAws.slice(0, 5),
     funQuestions[1],
-    ...awsQuestions.slice(5, 10),
+    ...mixedAws.slice(5, 10),
     funQuestions[2],
-    ...awsQuestions.slice(10, 15),
+    ...mixedAws.slice(10, 15),
     funQuestions[3],
-    ...awsQuestions.slice(15)
+    ...mixedAws.slice(15)
   ];
 }
 
@@ -507,21 +585,28 @@ io.on("connection", (socket) => {
       return;
     }
 
-    const answerIndex = Number(payload?.answerIndex);
     const currentQuestion = quizQuestions[state.questionIndex];
-    if (!Number.isInteger(answerIndex) || answerIndex < 0 || answerIndex >= currentQuestion.options.length) {
+    const answerIndices = normalizeAnswerIndices(payload, currentQuestion.options.length);
+    const minSelections = Number(currentQuestion.minSelections || 1);
+
+    if (answerIndices.length < minSelections) {
+      socket.emit("player:answer:error", `Coche au moins ${minSelections} reponses.`);
+      return;
+    }
+
+    if (!answerIndices.every((idx) => Number.isInteger(idx) && idx >= 0 && idx < currentQuestion.options.length)) {
       return;
     }
 
     const elapsedMs = Math.max(0, Date.now() - state.questionStartedAt);
     const elapsedSeconds = Math.min(state.questionDurationSeconds, elapsedMs / 1000);
     const timeLeft = Math.max(0, state.questionDurationSeconds - elapsedSeconds);
-    const isCorrect = answerIndex === currentQuestion.correctIndex;
+    const isCorrect = isCorrectSelection(currentQuestion, answerIndices);
     const speedFactor = timeLeft / state.questionDurationSeconds;
     const points = isCorrect ? Math.round(300 + speedFactor * 700) : 0;
 
     state.answers.set(socket.id, {
-      answerIndex,
+      answerIndices,
       elapsedMs,
       points,
       isCorrect
@@ -651,8 +736,6 @@ function resetRoundData() {
     player.score = 0;
     player.lastPoints = 0;
     player.lastCorrect = false;
-      player.streak = 0;
-      player.bestStreak = 0;
     player.streak = 0;
     player.bestStreak = 0;
   }
@@ -669,6 +752,7 @@ function publicQuestionPayload() {
     text: question.text,
     options: question.options,
     category: question.category,
+    minSelections: Number(question.minSelections || 1),
     durationSeconds: state.questionDurationSeconds,
     startedAt: state.questionStartedAt
   };
@@ -678,7 +762,7 @@ function hostQuestionPayload() {
   const question = quizQuestions[state.questionIndex];
   return {
     ...publicQuestionPayload(),
-    correctIndex: question.correctIndex
+    correctIndices: getCorrectIndices(question)
   };
 }
 
@@ -719,8 +803,8 @@ function reviewPayload(reason = "manual") {
     total: quizQuestions.length,
     question: question.text,
     category: question.category,
-    correctIndex: question.correctIndex,
-    correctAnswer: question.options[question.correctIndex],
+    correctIndices: getCorrectIndices(question),
+    correctAnswer: getCorrectIndices(question).map((idx) => question.options[idx]).join(" / "),
     explanation,
     allCorrect,
     allWrong,
@@ -757,12 +841,14 @@ function hostAnswersPayload() {
   const details = [...state.answers.entries()]
     .map(([playerId, answer]) => {
       const player = state.players.get(playerId);
-      const answerLabel = options[answer.answerIndex] || "(unknown)";
+      const answerLabel = (answer.answerIndices || [])
+        .map((idx) => options[idx] || "(unknown)")
+        .join(" / ");
 
       return {
         playerId,
         nickname: player ? player.nickname : "Joueur",
-        answerIndex: answer.answerIndex,
+        answerIndices: answer.answerIndices || [],
         answerLabel,
         isCorrect: answer.isCorrect,
         points: answer.points,
@@ -839,6 +925,39 @@ function sanitizeNickname(input) {
     .replace(/\s+/g, " ")
     .slice(0, 20);
   return cleaned;
+}
+
+function normalizeAnswerIndices(payload, optionsCount) {
+  if (Array.isArray(payload?.answerIndices)) {
+    return [...new Set(payload.answerIndices.map((value) => Number(value)))].filter(
+      (value) => Number.isInteger(value) && value >= 0 && value < optionsCount
+    );
+  }
+
+  const single = Number(payload?.answerIndex);
+  if (Number.isInteger(single) && single >= 0 && single < optionsCount) {
+    return [single];
+  }
+
+  return [];
+}
+
+function getCorrectIndices(question) {
+  if (Array.isArray(question.correctIndices) && question.correctIndices.length > 0) {
+    return [...question.correctIndices];
+  }
+  return [question.correctIndex];
+}
+
+function isCorrectSelection(question, answerIndices) {
+  const expected = [...new Set(getCorrectIndices(question))].sort((a, b) => a - b);
+  const actual = [...new Set(answerIndices)].sort((a, b) => a - b);
+
+  if (expected.length !== actual.length) {
+    return false;
+  }
+
+  return expected.every((value, index) => value === actual[index]);
 }
 
 function isHost(socketId) {
