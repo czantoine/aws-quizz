@@ -13,29 +13,33 @@ const io = new Server(server);
 const DEFAULT_PORT = Number(process.env.PORT || 3000);
 const QUESTION_DURATION_SECONDS = 60;
 const CELEBRATION_GIFS = [
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmw4NXlmMjdkcjIxMzhzMm1uaDVreTYydGJ1YXc5OHMyYjdsYnd1dSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/wmuyDdRNXYximlvYM1/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3N290cG13OGQzMDV5eTYwZ3p5bzNka2tqYWNhdWhic2YwaWxnc3I3OCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/w9eIBZ7DQD7mxv7NtY/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExamY4N3V6OTJzOWtibzMwYWFmb3F5YnpsbHBqcXVtYXBnb3d6aGV4ZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6vaX3rmgrO2sWEXZQz/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3NzV5aHB6anV1OHo5ZmpnMzVwc2RsdXBrZ2k4MDJvMnM0ZHl1ZDlieCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/CcmwiFn1q3jPTQ3Y4K/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dHpjNTNpajBmbmp1ZzMyaTQ1OW5vMDUyem53NDFkazd6OTVuYm5obyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/cdNSp4L5vCU7aQrYnV/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dHpjNTNpajBmbmp1ZzMyaTQ1OW5vMDUyem53NDFkazd6OTVuYm5obyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/o4va9aMaFyvLMYewmU/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3b293ZWw2NmF3emkyNjhkaTF5OG02OHcyejh6YzFqdGtqZG03dnNidCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xULW8JVo4V7x9aqae4/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3NHdvZDN1NXRwaWtwMnhkYTVrZ3k2aGFzNTlwYWQ3eXFzbHV5ZnBmOSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/KvGkTDzBnY03m/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YmdrdmNuMHltdWkwMGcyOTEzaGg0MTdlYzhtMXFrYmI5cTR2enQ4ciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/uNvXBlop4OLwhkPQUS/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YmdrdmNuMHltdWkwMGcyOTEzaGg0MTdlYzhtMXFrYmI5cTR2enQ4ciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ovSNOmpGgVMY4R1QU0/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3a241NGFibW9oZmw4YnlrYWZqamVpYzd6ZXYzMGk1eTV5dzJwZml3aSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6Ggx27ZZjVUKtcUPMK/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dW0zZGRxeXd2dW04ZjVlNXY4NXowc3Boenc4cGJtaHNraGYzdGs1YyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/puq6wFWMbnX6Ljz0yQ/giphy.gif"
+  "https://media.giphy.com/media/pu77FmyxXEloNdhs6U/giphy.gif",
+  "https://media.giphy.com/media/1PMVNNKVIL8Ig/giphy.gif",
+  "https://media.giphy.com/media/artj92V8o75VPL7AeQ/giphy.gif",
+  "https://media.giphy.com/media/dv6bed9SrshzPRLa1s/giphy.gif",
+  "https://media.giphy.com/media/xUOrwp4STllIPP6zyo/giphy.gif",
+  "https://media.giphy.com/media/ktU8kAKsyIauRSOoZs/giphy.gif",
+  "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
+  "https://media.giphy.com/media/YTbZzCkRQCEJa/giphy.gif",
+  "https://media.giphy.com/media/M1Ge89HJxugRfkH1jt/giphy.gif",
+  "https://media.giphy.com/media/BjNMiLuMsLL2gu4gtl/giphy.gif",
+  "https://media.giphy.com/media/s2qXK8wAvkHTO/giphy.gif",
+  "https://media.giphy.com/media/IwAZ6dvvvaTtdI8SD5/giphy.gif"
 
 ];
 const FAIL_GIFS = [
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmVhNnI4cGFmcGdycnI2bjBxaXJqdngzeGJpMGRvaWZsaHpnN3gxbCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xTiTnIilwuFFFpf2Cc/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmVhNnI4cGFmcGdycnI2bjBxaXJqdngzeGJpMGRvaWZsaHpnN3gxbCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/fpXxIjftmkk9y/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2NvOGVjMXQwZmxxbGg3cHhzdXJuNzNxenh4eDIwMTI4c2xkYXNpZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/pY8jLmZw0ElqvVeRH4/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmVhNnI4cGFmcGdycnI2bjBxaXJqdngzeGJpMGRvaWZsaHpnN3gxbCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/vQqeT3AYg8S5O/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aHVuaHc3OTlwMmdheTA0Ym1xMXEycjgzNGRsMnV1cDhjaWM0YjI2aSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/w36LqLo57gmvXa7wjf/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bmFlc2JucDl2NGZ6Z2NwbnVyOWxwY25pbWRtOG9xOHJzemF3MjM1NSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/OPYnG3Xf8zLag/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZzNobmZ0a3l3b2w0aWdyb2JwaHZ4djc3cjVuNzV1YW0zMjBjc2xtYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/bbcXfKM7sacXZFb8ri/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3MjFzbGV4d3hkeHl2N29sOXNuZDcwOW9sZ2R5YXZidWd2dG1tdmNyNSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5Tg1PLEnROfPmd8bQf/giphy.gif"
+  "https://media.giphy.com/media/3EiNpweH34XGoQcq9Q/giphy.gif",
+  "https://media.giphy.com/media/YaXDLHHbz0t5lTM03z/giphy.gif",
+  "https://media.giphy.com/media/gKHGnB1ml0moQdjhEJ/giphy.gif",
+  "https://media.giphy.com/media/glmRyiSI3v5E4/giphy.gif",
+  "https://media.giphy.com/media/3etP8HqLPVixUc9Y3s/giphy.gif",
+  "https://media.giphy.com/media/OQHD0kB7RLJMakUh2W/giphy.gif",
+  "https://media.giphy.com/media/3o7aCTPPm4OHfRLSH6/giphy.gif",
+  "https://media.giphy.com/media/lkdH8FmImcGoylv3t3/giphy.gif",
+  "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif",
+  "https://media.giphy.com/media/FY8c5SKwiNf1EtZKGs/giphy.gif",
+  "https://media.giphy.com/media/SqmkZ5IdwzTP2/giphy.gif",
+  "https://media.giphy.com/media/H4zeDO4ocDYqY/giphy.gif"
 ];
 const ALLOWED_REACTIONS = new Set(["cat", "thumbs_up", "thumbs_down"]);
 const REACTION_EMOJI = {
@@ -69,286 +73,286 @@ const ROUND_PHRASES = {
 
 const awsQuestions = [
   {
-    id: "aws-1",
-    text: "Quel service AWS permet de gerer les identites et les permissions ?",
-    options: ["Amazon GuardDuty", "AWS IAM", "AWS Shield", "Amazon Macie"],
+    id: "s2-aws-1",
+    text: "Quel service AWS permet de gerer des identites, des roles et des permissions ?",
+    options: ["AWS IAM", "Amazon GuardDuty", "AWS Shield", "Amazon Macie"],
+    correctIndex: 0,
+    explanation: "AWS IAM (Identity and Access Management) sert a controler qui peut faire quoi sur les ressources AWS.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-2",
+    text: "Quel service de stockage est le plus adapte pour conserver des objets de facon durable et economique ?",
+    options: ["Amazon EBS", "Amazon S3", "Amazon RDS", "Amazon ElastiCache"],
     correctIndex: 1,
-    explanation: "AWS IAM (Identity and Access Management) est le service cle pour gerer les utilisateurs, roles, et permissions d'acces aux ressources AWS.",
+    explanation: "Amazon S3 est le stockage d'objets standard pour de nombreux cas d'usage, avec durabilite elevee et cout optimise.",
     category: "AWS"
   },
   {
-    id: "aws-2",
-    text: "Dans le modele de responsabilite partagee, AWS est responsable de quoi ?",
-    options: ["Configurer les mots de passe IAM", "Securiser l'infrastructure physique", "Patcher votre code applicatif", "Creer vos sauvegardes"],
+    id: "s2-aws-3",
+    text: "Quel service gere une base de donnees relationnelle sans avoir a administrer le moteur vous-meme ?",
+    options: ["Amazon RDS", "Amazon DynamoDB", "Amazon SQS", "Amazon Route 53"],
+    correctIndex: 0,
+    explanation: "Amazon RDS fournit des bases relationnelles gerees comme MySQL, PostgreSQL, MariaDB, Oracle et SQL Server.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-4",
+    text: "Quel service distribue le contenu via des points de presence proches des utilisateurs ?",
+    options: ["Amazon CloudFront", "AWS Direct Connect", "AWS Backup", "Amazon Athena"],
+    correctIndex: 0,
+    explanation: "Amazon CloudFront est le CDN AWS, utile pour reduire la latence et accelerer la diffusion du contenu.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-5",
+    text: "Quel service execute du code a la demande sans gestion de serveurs ?",
+    options: ["Amazon ECS", "AWS Lambda", "Amazon EC2", "AWS Batch"],
     correctIndex: 1,
-    explanation: "AWS est responsable de la securite de l'infrastructure physique (data centers, reseaux, hardware). Les clients sont responsables de leur config, code, et donnees.",
+    explanation: "AWS Lambda permet d'executer du code sans provisionner ni maintenir de serveurs.",
     category: "AWS"
   },
   {
-    id: "aws-3",
-    text: "Quel service est principalement utilise pour stocker des objets de maniere durable ?",
-    options: ["Amazon RDS", "Amazon EBS", "Amazon S3", "Amazon DynamoDB"],
-    correctIndex: 2,
-    explanation: "Amazon S3 (Simple Storage Service) est le service de stockage d'objets hautement durable (99.999999999% de durabilite).",
+    id: "s2-aws-6",
+    text: "Quel service centralise metriques, logs et alarmes ?",
+    options: ["Amazon CloudWatch", "AWS Config", "AWS Artifact", "AWS Organizations"],
+    correctIndex: 0,
+    explanation: "Amazon CloudWatch sert a surveiller les workloads avec metriques, logs, alarmes et tableaux de bord.",
     category: "AWS"
   },
   {
-    id: "aws-4",
-    text: "Quel modele de tarification AWS vous donne une remise en echange d'un engagement ?",
-    options: ["On-Demand", "Reserved Instances / Savings Plans", "Spot uniquement", "Free Tier"],
+    id: "s2-aws-7",
+    text: "Quel service enregistre les appels API et les actions effectuees dans un compte AWS ?",
+    options: ["AWS CloudTrail", "Amazon Inspector", "Amazon Detective", "AWS WAF"],
+    correctIndex: 0,
+    explanation: "AWS CloudTrail conserve un historique des appels API pour l'audit et l'investigation.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-8",
+    text: "Quel service DNS permet du routage par latence, geolocalisation ou failover ?",
+    options: ["Amazon Route 53", "Amazon CloudFront", "AWS Global Accelerator", "Amazon VPC"],
+    correctIndex: 0,
+    explanation: "Amazon Route 53 fournit l'enregistrement DNS et des policies de routage avancees.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-9",
+    text: "Quel service repartit le trafic entrant sur plusieurs cibles pour ameliorer la disponibilite ?",
+    options: ["Elastic Load Balancing", "AWS Snowball", "Amazon QuickSight", "Amazon Textract"],
+    correctIndex: 0,
+    explanation: "Elastic Load Balancing distribue le trafic vers plusieurs instances, conteneurs ou IPs.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-10",
+    text: "Quel service ajoute ou retire automatiquement des ressources selon la charge ?",
+    options: ["AWS Auto Scaling", "AWS Budgets", "AWS KMS", "Amazon Athena"],
+    correctIndex: 0,
+    explanation: "AWS Auto Scaling adapte automatiquement la capacite aux variations de trafic ou d'utilisation.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-11",
+    text: "Quel stockage est attache a une instance EC2 sous forme de disque bloc ?",
+    options: ["Amazon EBS", "Amazon S3", "Amazon EFS", "Amazon Redshift"],
+    correctIndex: 0,
+    explanation: "Amazon EBS fournit un stockage bloc persistant pour les instances EC2.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-12",
+    text: "Quel service sert a decoupler deux composants avec une file de messages ?",
+    options: ["Amazon SQS", "Amazon SNS", "Amazon EC2", "AWS Glue"],
+    correctIndex: 0,
+    explanation: "Amazon SQS est une file de messages geree pour les traitements asynchrones et le decouplage.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-13",
+    text: "Quel service diffuse un message vers plusieurs abonnements et plusieurs protocoles ?",
+    options: ["Amazon SNS", "Amazon SQS", "AWS Backup", "Amazon EC2"],
+    correctIndex: 0,
+    explanation: "Amazon SNS est un service pub/sub pour notifier plusieurs consommateurs en parallele.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-14",
+    text: "Quel service NoSQL serverless offre des latences faibles a grande echelle ?",
+    options: ["Amazon DynamoDB", "Amazon Aurora", "Amazon RDS", "Amazon ElastiCache"],
+    correctIndex: 0,
+    explanation: "Amazon DynamoDB est une base NoSQL geree, tres scalable et conue pour la performance previsible.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-15",
+    text: "Quel service gere les cles de chiffrement integrees a la plupart des services AWS ?",
+    options: ["AWS KMS", "AWS Secrets Manager", "AWS IAM", "Amazon GuardDuty"],
+    correctIndex: 0,
+    explanation: "AWS KMS permet de creer et gerer des cles de chiffrement avec integration dans l'ecosysteme AWS.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-16",
+    text: "Quel service est pense pour stocker et faire tourner des secrets applicatifs ?",
+    options: ["AWS Secrets Manager", "Amazon S3", "AWS CloudFormation", "Amazon Cognito"],
+    correctIndex: 0,
+    explanation: "AWS Secrets Manager stocke et chiffre des secrets comme des mots de passe ou des tokens API.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-17",
+    text: "Quel service permet de decrire l'infrastructure AWS en templates versionnables ?",
+    options: ["AWS CloudFormation", "AWS Config", "Amazon EventBridge", "AWS Trusted Advisor"],
+    correctIndex: 0,
+    explanation: "AWS CloudFormation sert a definir et deploiement l'infrastructure en tant que code.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-18",
+    text: "Quel service permet de regrouper plusieurs comptes AWS sous une gouvernance centralisee ?",
+    options: ["AWS Organizations", "AWS Artifact", "Amazon Macie", "Amazon CloudWatch"],
+    correctIndex: 0,
+    explanation: "AWS Organizations aide a gerer plusieurs comptes et a appliquer des policies communes.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-19",
+    text: "Sur EC2, qui est responsable de patcher le systeme d'exploitation dans le modele partage ?",
+    options: ["AWS", "Le client", "Le fournisseur de la base de donnees", "Personne"],
     correctIndex: 1,
-    explanation: "Reserved Instances et Savings Plans offrent des remises de 30-70% en echange d'un engagement de 1 ou 3 ans.",
+    explanation: "Dans le modele de responsabilite partagee, le client gere l'OS et les applications sur EC2.",
     category: "AWS"
   },
   {
-    id: "aws-5",
-    text: "Quel service est un CDN global pour accelerer la distribution de contenu ?",
-    options: ["Amazon Route 53", "Amazon CloudFront", "AWS Direct Connect", "Elastic Load Balancing"],
+    id: "s2-aws-20",
+    text: "Quelle option est adaptee a une charge stable avec engagement pour reduire la facture ?",
+    options: ["Savings Plans ou Reserved Instances", "Spot Instances", "On-Demand uniquement", "Free Tier"],
+    correctIndex: 0,
+    explanation: "Savings Plans et Reserved Instances offrent des remises contre un engagement de consommation.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-21-hard",
+    text: "[DIFFICILE] Quel est le principal inconvenient d'une Lambda executee dans un VPC ?",
+    options: ["Un cold start plus lent", "Plus aucun acces au reseau", "Un cout 100x plus eleve", "Une obligation de gerer manuellement le scale"],
+    correctIndex: 0,
+    explanation: "Une Lambda dans un VPC peut avoir un demarrage plus lent a cause de l'attache reseau.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-22-ultra-hard",
+    text: "[ULTRA-DIFFICILE] Quel service permet de sauvegarder et restaurer des donnees AWS de facon centralisee ?",
+    options: ["AWS Backup", "AWS Budgets", "Amazon QuickSight", "AWS IoT Core"],
+    correctIndex: 0,
+    explanation: "AWS Backup centralise la planification, la conservation et la restauration des sauvegardes.",
+    category: "AWS"
+  },
+  {
+    id: "s2-aws-23-super-hard",
+    text: "[SUPER-DIFFICILE] Une action est autorisee par IAM mais refusee explicitement par une SCP. Quel est le resultat ?",
+    options: ["L'action est autorisee", "Le deny explicite de la SCP gagne", "Le resultat depend de la region", "IAM Prime sur la SCP"],
     correctIndex: 1,
-    explanation: "Amazon CloudFront est le CDN (Content Delivery Network) d'AWS, avec des points de presence mondiaux pour accelerer les contenus.",
+    explanation: "Un deny explicite bloque toujours l'action, et une SCP definit la limite maximale des permissions.",
     category: "AWS"
   },
   {
-    id: "aws-6",
-    text: "Quel service est une base de donnees relationnelle geree ?",
-    options: ["Amazon Redshift", "Amazon RDS", "Amazon ElastiCache", "Amazon S3"],
-    correctIndex: 1,
-    explanation: "Amazon RDS est le service de base de donnees relationnelle geree (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server, Aurora) avec sauvegardes, patching et haute disponibilite.",
-    category: "AWS"
-  },
-  {
-    id: "aws-7",
-    text: "Quel service permet d'executer du code sans gerer de serveurs ?",
-    options: ["Amazon EC2", "AWS Lambda", "Amazon ECS", "AWS Batch"],
-    correctIndex: 1,
-    explanation: "AWS Lambda execute du code a la demande sans gerer d'infrastructure. Vous payez a l'invocation et au temps d'execution.",
-    category: "AWS"
-  },
-  {
-    id: "aws-8",
-    text: "Quel service DNS hautement disponible est propose par AWS ?",
-    options: ["Amazon CloudWatch", "Amazon Route 53", "AWS WAF", "Amazon VPC"],
-    correctIndex: 1,
-    explanation: "Amazon Route 53 est le service DNS d'AWS, hautement disponible, avec routage avance (latency, geolocation, failover, etc.).",
-    category: "AWS"
-  },
-  {
-    id: "aws-9",
-    text: "Quel service aide a detecter des menaces en continu dans votre compte AWS ?",
-    options: ["AWS Artifact", "Amazon Inspector", "Amazon GuardDuty", "AWS Budgets"],
-    correctIndex: 2,
-    explanation: "Amazon GuardDuty detecte des menaces en continu via l'analyse des logs CloudTrail, VPC Flow Logs et DNS logs avec de l'intelligence de menace.",
-    category: "AWS"
-  },
-  {
-    id: "aws-10",
-    text: "Quel outil donne une estimation des couts avant de deployer ?",
-    options: ["AWS Cost Explorer", "AWS Pricing Calculator", "AWS Organizations", "AWS Trusted Advisor"],
-    correctIndex: 1,
-    explanation: "AWS Pricing Calculator permet d'estimer les couts futurs selon l'architecture prevue, avant tout deploiement en production.",
-    category: "AWS"
-  },
-  {
-    id: "aws-11",
-    text: "Quel service permet de surveiller metriques, logs et alarmes ?",
-    options: ["AWS CloudTrail", "Amazon CloudWatch", "AWS Config", "Amazon EventBridge"],
-    correctIndex: 1,
-    explanation: "Amazon CloudWatch centralise metriques, logs, alarmes et dashboards pour la supervision operationnelle des workloads AWS.",
-    category: "AWS"
-  },
-  {
-    id: "aws-12",
-    text: "Quel service enregistre les appels API faits dans le compte AWS ?",
-    options: ["AWS CloudTrail", "Amazon Inspector", "AWS IAM Identity Center", "AWS X-Ray"],
+    id: "s2-aws-24",
+    text: "Quel service detecte des menaces en continu en analysant differents signaux de securite ?",
+    options: ["Amazon GuardDuty", "AWS Cost Explorer", "Amazon Athena", "AWS Snowcone"],
     correctIndex: 0,
-    explanation: "AWS CloudTrail journalise les appels API (qui a fait quoi, quand, et depuis ou), utile pour audit, securite et investigation.",
+    explanation: "Amazon GuardDuty detecte des menaces grace a l'analyse de signaux comme CloudTrail et les logs reseau.",
     category: "AWS"
   },
   {
-    id: "aws-13",
-    text: "Pour reduire les couts avec des interruptions possibles, quel type d'instance choisir ?",
-    options: ["On-Demand", "Dedicated Hosts", "Spot Instances", "Reserved Instances"],
-    correctIndex: 2,
-    explanation: "Les Spot Instances exploitent la capacite AWS inutilisee avec de fortes remises, mais elles peuvent etre interrompues si AWS recupere la capacite.",
-    category: "AWS"
-  },
-  {
-    id: "aws-14",
-    text: "Quel service est concu pour le stockage d'archives a faible cout ?",
-    options: ["Amazon S3 Glacier", "Amazon EFS", "Amazon FSx", "Amazon Aurora"],
+    id: "s2-aws-25",
+    text: "Quel service agrège les alertes et findings de securite sur plusieurs services AWS ?",
+    options: ["AWS Security Hub", "AWS Artifact", "Amazon Inspector", "AWS WAF"],
     correctIndex: 0,
-    explanation: "Amazon S3 Glacier est optimise pour l'archivage a faible cout, avec des temps de restauration plus longs selon la classe choisie.",
+    explanation: "AWS Security Hub centralise et normalise les findings de securite pour simplifier le suivi.",
     category: "AWS"
   },
   {
-    id: "aws-15",
-    text: "Quel service permet une federation de comptes AWS avec gouvernance centralisee ?",
-    options: ["AWS Organizations", "AWS Budgets", "AWS Secrets Manager", "AWS KMS"],
+    id: "s2-aws-26",
+    text: "Quel service fournit des certificats SSL/TLS geres pour les applications AWS ?",
+    options: ["AWS Certificate Manager", "AWS KMS", "AWS IAM Identity Center", "Amazon Route 53"],
     correctIndex: 0,
-    explanation: "AWS Organizations permet de regrouper plusieurs comptes, appliquer des politiques globales (SCP) et centraliser la gouvernance/billing.",
+    explanation: "AWS Certificate Manager (ACM) emet et renouvelle des certificats utilises avec des services AWS compatibles.",
     category: "AWS"
   },
   {
-    id: "aws-16",
-    text: "Quel service est souvent utilise pour distribuer des applications sur plusieurs zones de disponibilite ?",
-    options: ["Elastic Load Balancing", "AWS Snowball", "AWS Glue", "Amazon Rekognition"],
+    id: "s2-aws-27",
+    text: "Quel service cree un reseau virtuel isole dans AWS ?",
+    options: ["Amazon VPC", "AWS Organizations", "Amazon S3", "AWS Lambda"],
     correctIndex: 0,
-    explanation: "Elastic Load Balancing repartit le trafic sur plusieurs cibles et AZ, ce qui ameliore disponibilite, scalabilite et tolerance aux pannes.",
+    explanation: "Amazon VPC permet de definir un reseau prive virtuel avec sous-reseaux, routes et controles de securite.",
     category: "AWS"
   },
   {
-    id: "aws-17",
-    text: "Quel service protege contre les attaques DDoS au niveau applicatif et reseau ?",
-    options: ["AWS Shield", "AWS Firewall Manager", "AWS Backup", "Amazon Detective"],
+    id: "s2-aws-28",
+    text: "Quel service permet d'acceder a des services AWS de facon privee sans passer par Internet public ?",
+    options: ["AWS PrivateLink", "Amazon CloudFront", "AWS Outposts", "AWS Snowball"],
     correctIndex: 0,
-    explanation: "AWS Shield (Standard et Advanced) protege contre les attaques DDoS. Shield Advanced offre des protections et visibilites supplementaires.",
+    explanation: "AWS PrivateLink fournit un acces prive a des services via des endpoints dans le reseau AWS.",
     category: "AWS"
   },
   {
-    id: "aws-18",
-    text: "Quel service facilite l'authentification des utilisateurs finaux dans une appli web/mobile ?",
-    options: ["Amazon Cognito", "AWS Directory Service", "AWS IAM", "AWS STS"],
+    id: "s2-aws-29",
+    text: "Quel service orchestre des conteneurs sans vous demander de gerer directement les serveurs ?",
+    options: ["Amazon ECS avec Fargate", "Amazon EBS", "AWS IAM", "AWS Backup"],
     correctIndex: 0,
-    explanation: "Amazon Cognito gere l'authentification et la federation d'identite pour les utilisateurs finaux (apps web/mobile), avec User Pools et Identity Pools.",
+    explanation: "Avec ECS et Fargate, AWS prend en charge la couche d'infrastructure pour les conteneurs.",
     category: "AWS"
   },
   {
-    id: "aws-19",
-    text: "Quel service permet d'analyser les depenses AWS et visualiser des tendances ?",
-    options: ["AWS Cost Explorer", "AWS Artifact", "AWS Personal Health Dashboard", "Amazon Athena"],
+    id: "s2-aws-30",
+    text: "Quel service stocke des images de conteneurs Docker de maniere geree ?",
+    options: ["Amazon ECR", "Amazon EFS", "Amazon S3", "AWS Config"],
     correctIndex: 0,
-    explanation: "AWS Cost Explorer sert a analyser les couts et usages dans le temps, avec filtres, regroupements et previsions de depenses.",
+    explanation: "Amazon ECR est le registre gere d'images de conteneurs pour ECS, EKS et autres environnements.",
     category: "AWS"
   },
   {
-    id: "aws-20",
-    text: "Quel avantage principal du cloud AWS est le plus lie a l'agilite ?",
-    options: ["Commander des serveurs physiques en avance", "Provisionner des ressources en minutes", "Utiliser uniquement du materiel on-premise", "Eviter toute automatisation"],
-    correctIndex: 1,
-    explanation: "L'agilite cloud vient surtout de la capacite a provisionner rapidement des ressources a la demande, sans cycles d'achat materiel longs.",
-    category: "AWS"
-  },
-  {
-    id: "aws-21-hard",
-    text: "[DIFFICILE] Vous deployez une Lambda dans une VPC. Quel est l'INCONVENIENT majeur comparee a une Lambda sans VPC ?",
-    options: ["Cold start plus lent (attache ENI)", "Impossible d'acceder aux APIs publiques", "Cout multiplie par 100", "Vous devez gerer le scale manuellement"],
+    id: "s2-aws-31",
+    text: "Quel service permet d'interroger des donnees dans S3 avec SQL sans serveur ?",
+    options: ["Amazon Athena", "Amazon RDS", "AWS Glue Studio", "AWS Step Functions"],
     correctIndex: 0,
-    explanation: "Lambda en VPC = cold start plus lent car elle attache une ENI (Elastic Network Interface) a chaque invocation. Sans VPC, c'est instantane.",
-    category: "AWS"
-  },
-  {
-    id: "aws-22-ultra-hard",
-    text: "[ULTRA-DIFFICILE] Vous avez des Reserved Instances pour 1 an et vous ne les utilisez plus. Comment revendre legalement ?",
-    options: ["AWS Resale Market direct", "AWS Marketplace (Reserved Instances uniquement)", "AWS Instance Exchange uniquement", "Impossible: RIs sont non-transferables"],
-    correctIndex: 1,
-    explanation: "AWS Marketplace Reserved Instances est la seule plateforme officielle pour acheter/vendre des RIs non utilisees. Instance Exchange ne permet que le swap de type d'instance.",
-    category: "AWS"
-  },
-  {
-    id: "aws-23-super-hard",
-    text: "[SUPER-DIFFICILE] Dans une policy IAM, que se passe-t-il si une action est autorisee par une identity-based policy mais refusee explicitement dans une Service Control Policy (SCP) AWS Organizations ?",
-    options: ["L'action est autorisee car IAM est prioritaire", "L'action est refusee, le deny explicite de la SCP gagne", "Le resultat depend de la region", "L'action est autorisee uniquement pour le compte management"],
-    correctIndex: 1,
-    explanation: "En evaluation IAM, un deny explicite gagne toujours. Une SCP definit la limite maximale des permissions dans le compte membre, donc un deny dans la SCP bloque meme si IAM autorise.",
-    category: "AWS"
-  },
-  {
-    id: "aws-24",
-    text: "Quel service AWS fournit des cles de chiffrement gerees et integree avec la plupart des services AWS ?",
-    options: ["AWS KMS", "AWS Secrets Manager", "AWS WAF", "Amazon Detective"],
-    correctIndex: 0,
-    explanation: "AWS KMS (Key Management Service) permet de creer et gerer des cles de chiffrement, avec controles d'acces IAM et audit via CloudTrail.",
-    category: "AWS"
-  },
-  {
-    id: "aws-25",
-    text: "Quel service est le plus adapte pour stocker et recuperer des secrets applicatifs (mots de passe DB, tokens API) ?",
-    options: ["Amazon S3", "AWS Secrets Manager", "AWS CloudFormation", "AWS Budgets"],
-    correctIndex: 1,
-    explanation: "AWS Secrets Manager est concu pour stocker, chiffrer et faire la rotation automatique de secrets applicatifs.",
-    category: "AWS"
-  },
-  {
-    id: "aws-26",
-    text: "Quel service permet de definir l'infrastructure AWS en code (IaC) via des templates ?",
-    options: ["AWS CloudFormation", "Amazon EventBridge", "AWS Control Tower", "Amazon QuickSight"],
-    correctIndex: 0,
-    explanation: "AWS CloudFormation permet de declarer l'infrastructure dans des templates (YAML/JSON) pour deploiements repetables et versionnes.",
-    category: "AWS"
-  },
-  {
-    id: "aws-27",
-    text: "Quel service est le plus approprie pour une file de messages decouplant deux applications ?",
-    options: ["Amazon SQS", "Amazon Route 53", "Amazon ECR", "AWS Global Accelerator"],
-    correctIndex: 0,
-    explanation: "Amazon SQS fournit des files de messages managées pour decoupler producteurs et consommateurs de facon fiable et scalable.",
-    category: "AWS"
-  },
-  {
-    id: "aws-28",
-    text: "Quel service pub/sub est adapte pour diffuser un evenement vers plusieurs consommateurs (email, Lambda, HTTP, etc.) ?",
-    options: ["Amazon SNS", "Amazon SQS", "AWS KMS", "AWS Backup"],
-    correctIndex: 0,
-    explanation: "Amazon SNS est un service pub/sub qui diffuse des messages a plusieurs abonnements et protocoles.",
-    category: "AWS"
-  },
-  {
-    id: "aws-29",
-    text: "Quel service AWS permet une base NoSQL cle-valeur/document avec latence milliseconde a grande echelle ?",
-    options: ["Amazon DynamoDB", "Amazon RDS", "Amazon Redshift", "Amazon Aurora"],
-    correctIndex: 0,
-    explanation: "Amazon DynamoDB est une base NoSQL serverless, tres scalable, avec performances rapides et previsibles en millisecondes.",
-    category: "AWS"
-  },
-  {
-    id: "aws-30",
-    text: "Quel service sert principalement a visualiser et interroger les logs dans CloudWatch via un langage de requete ?",
-    options: ["CloudWatch Logs Insights", "AWS X-Ray", "Amazon Athena", "AWS Config"],
-    correctIndex: 0,
-    explanation: "CloudWatch Logs Insights permet d'explorer les logs CloudWatch avec des requetes pour diagnostiquer rapidement incidents et tendances.",
-    category: "AWS"
-  },
-  {
-    id: "aws-31",
-    text: "Quel service facilite la connectivite privee entre un VPC et des services AWS sans passer par Internet public ?",
-    options: ["AWS PrivateLink", "Amazon CloudFront", "AWS Outposts", "AWS Snowcone"],
-    correctIndex: 0,
-    explanation: "AWS PrivateLink (via VPC endpoints) fournit une connectivite privee vers des services AWS ou partenaires sans exposition Internet.",
+    explanation: "Amazon Athena interroge directement les donnees stockees dans S3 avec un modele serverless et SQL.",
     category: "AWS"
   }
 ];
 
 const funQuestions = [
   {
-    id: "fun-0",
-    text: "Ton appli tourne bien, puis a 2h du matin plus rien. Quel service AWS te raconte qui a appele quelle API ?",
-    options: ["CloudTrail", "CloudWatch Logs", "X-Ray", "AWS Config"],
+    id: "s2-fun-0",
+    text: "Tu veux une API simple sans gerer de serveurs ni de patching. Le duo le plus naturel ?",
+    options: ["Lambda + API Gateway", "EC2 + Apache", "RDS + ElastiCache", "S3 + Glacier"],
     correctIndex: 0,
-    explanation: "CloudTrail enregistre les appels API. C'est le detective officiel quand tout le monde jure 'j'ai rien touche'.",
+    explanation: "Lambda et API Gateway couvrent tres bien les APIs serverless avec peu d'operations a maintenir.",
     category: "Fun"
   },
   {
-    id: "fun-1",
-    text: "Tu veux heberger des fichiers statiques avec un nom de domaine perso, HTTPS et un minimum de drama. Le combo le plus propre ?",
-    options: ["S3 + CloudFront + Route 53 + ACM", "EC2 tout seul avec Apache", "RDS Multi-AZ", "Lambda sans stockage"],
+    id: "s2-fun-1",
+    text: "Tu veux un site statique avec HTTPS, un domaine perso et un minimum de bricolage. Quel combo choisiras-tu ?",
+    options: ["S3 + CloudFront + Route 53 + ACM", "EC2 seul", "RDS Multi-AZ", "Lambda sans stockage"],
     correctIndex: 0,
-    explanation: "S3 stocke, CloudFront distribue en HTTPS, Route 53 pointe le domaine, ACM gere le certificat. Team propre, zero bricolage nocturne.",
+    explanation: "S3 heberge, CloudFront accelere, Route 53 gere le DNS et ACM fournit le certificat HTTPS.",
     category: "Fun"
   },
   {
-    id: "fun-2",
-    text: "Ton manager dit: 'On paie trop cher EC2'. Quelle option est la plus logique pour baisser la facture d'une charge stable sur 1 an ?",
-    options: ["Savings Plans ou Reserved Instances", "Tout passer en Dedicated Hosts", "Laisser en On-Demand et prier", "Supprimer CloudWatch"],
+    id: "s2-fun-2",
+    text: "Deux applis doivent echanger des messages sans se bloquer mutuellement. Le service le plus simple pour ca ?",
+    options: ["Amazon SQS", "Amazon CloudFront", "AWS Budgets", "AWS WAF"],
     correctIndex: 0,
-    explanation: "Pour une charge previsible, Savings Plans / RI donnent des remises importantes. 'Prier' n'est pas encore un service managed AWS.",
+    explanation: "Amazon SQS absorbe les pics et decouple proprement le producteur du consommateur.",
     category: "Fun"
   },
   {
-    id: "fun-3",
-    text: "Question piege: quel service AWS t'aide a arreter de partager le meme compte root entre 12 personnes nommees 'admin2' ?",
-    options: ["IAM Identity Center", "S3 Glacier", "AWS WAF", "Amazon SNS"],
+    id: "s2-fun-3",
+    text: "Tu veux donner un acces propre a plusieurs comptes avec SSO et une gouvernance centrale. Tu prends quoi ?",
+    options: ["IAM Identity Center", "S3 Glacier", "AWS Snowcone", "Amazon Textract"],
     correctIndex: 0,
-    explanation: "IAM Identity Center permet un acces centralise (SSO) et des permissions propres. Le compte root, c'est comme le piment: un tout petit peu, tres rarement.",
+    explanation: "IAM Identity Center permet un acces centralise et plus propre que les comptes partages a la main.",
     category: "Fun"
   }
 ];
