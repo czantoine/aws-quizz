@@ -74,250 +74,250 @@ const ROUND_PHRASES = {
 const awsQuestions = [
   {
     id: "s2-aws-1",
-    text: "Quel service AWS permet de gerer des identites, des roles et des permissions ?",
-    options: ["AWS IAM", "Amazon GuardDuty", "AWS Shield", "Amazon Macie"],
+    text: "Pour une application a deploier sur plusieurs zones de disponibilite, quel service se charge de repartir le trafic entrant ?",
+    options: ["Elastic Load Balancing", "AWS Direct Connect", "Amazon Route 53", "AWS VPN"],
     correctIndex: 0,
-    explanation: "AWS IAM (Identity and Access Management) sert a controler qui peut faire quoi sur les ressources AWS.",
+    explanation: "Elastic Load Balancing repartit le trafic vers plusieurs cibles pour renforcer la disponibilite et la tolerance aux pannes.",
     category: "AWS"
   },
   {
     id: "s2-aws-2",
-    text: "Quel service de stockage est le plus adapte pour conserver des objets de facon durable et economique ?",
-    options: ["Amazon EBS", "Amazon S3", "Amazon RDS", "Amazon ElastiCache"],
+    text: "Quel service permet de creer un reseau prive isole dans AWS avec vos sous-reseaux et routes ?",
+    options: ["Amazon VPC", "AWS Organizations", "Amazon S3", "AWS Backup"],
     correctIndex: 1,
-    explanation: "Amazon S3 est le stockage d'objets standard pour de nombreux cas d'usage, avec durabilite elevee et cout optimise.",
+    explanation: "Amazon VPC definit un reseau virtuel prive avec sous-reseaux, tables de routage, gateways et controles reseau.",
     category: "AWS"
   },
   {
     id: "s2-aws-3",
-    text: "Quel service gere une base de donnees relationnelle sans avoir a administrer le moteur vous-meme ?",
-    options: ["Amazon RDS", "Amazon DynamoDB", "Amazon SQS", "Amazon Route 53"],
+    text: "Quel composant AWS controle le trafic entrant et sortant au niveau de l'instance EC2 avec des regles stateful ?",
+    options: ["Security Group", "Network ACL", "AWS WAF", "AWS Shield"],
     correctIndex: 0,
-    explanation: "Amazon RDS fournit des bases relationnelles gerees comme MySQL, PostgreSQL, MariaDB, Oracle et SQL Server.",
+    explanation: "Le Security Group agit comme un pare-feu stateful attache aux instances ou interfaces reseau.",
     category: "AWS"
   },
   {
     id: "s2-aws-4",
-    text: "Quel service distribue le contenu via des points de presence proches des utilisateurs ?",
-    options: ["Amazon CloudFront", "AWS Direct Connect", "AWS Backup", "Amazon Athena"],
+    text: "Quel composant filtre le trafic au niveau du sous-reseau avec des regles stateless ?",
+    options: ["Network ACL", "Security Group", "AWS IAM", "Amazon Inspector"],
     correctIndex: 0,
-    explanation: "Amazon CloudFront est le CDN AWS, utile pour reduire la latence et accelerer la diffusion du contenu.",
+    explanation: "Un Network ACL agit au niveau du sous-reseau et est stateless, donc les regles entree et sortie doivent etre coherentes.",
     category: "AWS"
   },
   {
     id: "s2-aws-5",
-    text: "Quel service execute du code a la demande sans gestion de serveurs ?",
-    options: ["Amazon ECS", "AWS Lambda", "Amazon EC2", "AWS Batch"],
-    correctIndex: 1,
-    explanation: "AWS Lambda permet d'executer du code sans provisionner ni maintenir de serveurs.",
+    text: "Quel service AWS permet de relier un reseau on-premise a un VPC via Internet chiffre ?",
+    options: ["AWS Site-to-Site VPN", "AWS Direct Connect", "Amazon CloudFront", "AWS PrivateLink"],
+    correctIndex: 0,
+    explanation: "AWS Site-to-Site VPN cree un tunnel chiffre IPsec entre votre environnement et AWS via Internet.",
     category: "AWS"
   },
   {
     id: "s2-aws-6",
-    text: "Quel service centralise metriques, logs et alarmes ?",
-    options: ["Amazon CloudWatch", "AWS Config", "AWS Artifact", "AWS Organizations"],
+    text: "Quel service propose une liaison privee dediee entre votre data center et AWS, sans passer par Internet public ?",
+    options: ["AWS Direct Connect", "AWS VPN", "Amazon Route 53", "Amazon CloudWatch"],
     correctIndex: 0,
-    explanation: "Amazon CloudWatch sert a surveiller les workloads avec metriques, logs, alarmes et tableaux de bord.",
+    explanation: "AWS Direct Connect fournit une connexion reseau privee et plus previsible vers AWS.",
     category: "AWS"
   },
   {
     id: "s2-aws-7",
-    text: "Quel service enregistre les appels API et les actions effectuees dans un compte AWS ?",
-    options: ["AWS CloudTrail", "Amazon Inspector", "Amazon Detective", "AWS WAF"],
+    text: "Quel service permet de faire du peering entre deux VPC pour qu'ils communiquent comme un seul reseau prive ?",
+    options: ["VPC Peering", "AWS Backup", "AWS Budgets", "AWS Artifact"],
     correctIndex: 0,
-    explanation: "AWS CloudTrail conserve un historique des appels API pour l'audit et l'investigation.",
+    explanation: "Le VPC Peering relie directement deux VPC via un lien reseau prive non transitif.",
     category: "AWS"
   },
   {
     id: "s2-aws-8",
-    text: "Quel service DNS permet du routage par latence, geolocalisation ou failover ?",
-    options: ["Amazon Route 53", "Amazon CloudFront", "AWS Global Accelerator", "Amazon VPC"],
+    text: "Quel service permet de connecter un VPC a une application partenaire ou un service AWS sans exposer le trafic sur Internet ?",
+    options: ["AWS PrivateLink", "Amazon ECR", "AWS Snowball", "Amazon Textract"],
     correctIndex: 0,
-    explanation: "Amazon Route 53 fournit l'enregistrement DNS et des policies de routage avancees.",
+    explanation: "AWS PrivateLink utilise des endpoints prives pour exposer un service sans ouvrir le trafic a Internet.",
     category: "AWS"
   },
   {
     id: "s2-aws-9",
-    text: "Quel service repartit le trafic entrant sur plusieurs cibles pour ameliorer la disponibilite ?",
-    options: ["Elastic Load Balancing", "AWS Snowball", "Amazon QuickSight", "Amazon Textract"],
+    text: "Quel service DNS AWS vous permet de faire du routage par latence, geolocalisation ou failover ?",
+    options: ["Amazon Route 53", "AWS WAF", "AWS Shield", "Amazon CloudWatch"],
     correctIndex: 0,
-    explanation: "Elastic Load Balancing distribue le trafic vers plusieurs instances, conteneurs ou IPs.",
+    explanation: "Amazon Route 53 propose un DNS gere avec des policies de routage avancees.",
     category: "AWS"
   },
   {
     id: "s2-aws-10",
-    text: "Quel service ajoute ou retire automatiquement des ressources selon la charge ?",
-    options: ["AWS Auto Scaling", "AWS Budgets", "AWS KMS", "Amazon Athena"],
+    text: "Quel service permet de donner un acces separe aux utilisateurs et roles sans utiliser le compte root au quotidien ?",
+    options: ["AWS IAM", "AWS Backup", "Amazon Athena", "Amazon S3"],
     correctIndex: 0,
-    explanation: "AWS Auto Scaling adapte automatiquement la capacite aux variations de trafic ou d'utilisation.",
+    explanation: "AWS IAM sert a gerer utilisateurs, groupes, roles et policies pour appliquer le moindre privilege.",
     category: "AWS"
   },
   {
     id: "s2-aws-11",
-    text: "Quel stockage est attache a une instance EC2 sous forme de disque bloc ?",
-    options: ["Amazon EBS", "Amazon S3", "Amazon EFS", "Amazon Redshift"],
+    text: "Quel service permet de partager un systeme de fichiers entre plusieurs instances EC2 dans plusieurs zones ?",
+    options: ["Amazon EFS", "Amazon EBS", "Amazon RDS", "AWS Lambda"],
     correctIndex: 0,
-    explanation: "Amazon EBS fournit un stockage bloc persistant pour les instances EC2.",
+    explanation: "Amazon EFS est un systeme de fichiers gere, elastique et partageable entre plusieurs instances.",
     category: "AWS"
   },
   {
     id: "s2-aws-12",
-    text: "Quel service sert a decoupler deux composants avec une file de messages ?",
-    options: ["Amazon SQS", "Amazon SNS", "Amazon EC2", "AWS Glue"],
+    text: "Quel service aide a proteger une application web contre des attaques comme le SQL injection ou les bots malveillants ?",
+    options: ["AWS WAF", "AWS Direct Connect", "Amazon EFS", "AWS Support"],
     correctIndex: 0,
-    explanation: "Amazon SQS est une file de messages geree pour les traitements asynchrones et le decouplage.",
+    explanation: "AWS WAF filtre le trafic HTTP(S) au niveau applicatif avec des regles et des protections gerables.",
     category: "AWS"
   },
   {
     id: "s2-aws-13",
-    text: "Quel service diffuse un message vers plusieurs abonnements et plusieurs protocoles ?",
-    options: ["Amazon SNS", "Amazon SQS", "AWS Backup", "Amazon EC2"],
+    text: "Quel service aide a proteger contre les attaques DDoS au niveau reseau et applicatif ?",
+    options: ["AWS Shield", "Amazon Macie", "AWS Config", "AWS Glue"],
     correctIndex: 0,
-    explanation: "Amazon SNS est un service pub/sub pour notifier plusieurs consommateurs en parallele.",
+    explanation: "AWS Shield protege contre les DDoS ; Shield Advanced apporte des protections supplementaires.",
     category: "AWS"
   },
   {
     id: "s2-aws-14",
-    text: "Quel service NoSQL serverless offre des latences faibles a grande echelle ?",
-    options: ["Amazon DynamoDB", "Amazon Aurora", "Amazon RDS", "Amazon ElastiCache"],
+    text: "Quel service vous aide a detecter automatiquement des mauvaises configurations de securite dans votre compte ?",
+    options: ["AWS Config", "Amazon CloudFront", "AWS Snowball", "Amazon QuickSight"],
     correctIndex: 0,
-    explanation: "Amazon DynamoDB est une base NoSQL geree, tres scalable et conue pour la performance previsible.",
+    explanation: "AWS Config suit l'etat des ressources et peut evaluer leur conformite a des regles de configuration.",
     category: "AWS"
   },
   {
     id: "s2-aws-15",
-    text: "Quel service gere les cles de chiffrement integrees a la plupart des services AWS ?",
-    options: ["AWS KMS", "AWS Secrets Manager", "AWS IAM", "Amazon GuardDuty"],
+    text: "Quel service AWS sert a collecter et consulter les journaux d'audit des appels API ?",
+    options: ["AWS CloudTrail", "Amazon Inspector", "AWS Budgets", "Amazon Athena"],
     correctIndex: 0,
-    explanation: "AWS KMS permet de creer et gerer des cles de chiffrement avec integration dans l'ecosysteme AWS.",
+    explanation: "AWS CloudTrail enregistre les appels API et les actions effectuees dans les comptes AWS.",
     category: "AWS"
   },
   {
     id: "s2-aws-16",
-    text: "Quel service est pense pour stocker et faire tourner des secrets applicatifs ?",
-    options: ["AWS Secrets Manager", "Amazon S3", "AWS CloudFormation", "Amazon Cognito"],
+    text: "Quel service permet de definir toute une infrastructure via des templates YAML ou JSON ?",
+    options: ["AWS CloudFormation", "Amazon SQS", "AWS WAF", "Amazon VPC"],
     correctIndex: 0,
-    explanation: "AWS Secrets Manager stocke et chiffre des secrets comme des mots de passe ou des tokens API.",
+    explanation: "AWS CloudFormation permet de decrire et de versionner l'infrastructure en tant que code.",
     category: "AWS"
   },
   {
     id: "s2-aws-17",
-    text: "Quel service permet de decrire l'infrastructure AWS en templates versionnables ?",
-    options: ["AWS CloudFormation", "AWS Config", "Amazon EventBridge", "AWS Trusted Advisor"],
+    text: "Quel service permet de regrouper plusieurs comptes AWS sous une gouvernance commune ?",
+    options: ["AWS Organizations", "Amazon ECR", "AWS Lambda", "Amazon VPC"],
     correctIndex: 0,
-    explanation: "AWS CloudFormation sert a definir et deploiement l'infrastructure en tant que code.",
+    explanation: "AWS Organizations facilite la gouvernance multi-comptes et l'application de policies communes.",
     category: "AWS"
   },
   {
     id: "s2-aws-18",
-    text: "Quel service permet de regrouper plusieurs comptes AWS sous une gouvernance centralisee ?",
-    options: ["AWS Organizations", "AWS Artifact", "Amazon Macie", "Amazon CloudWatch"],
+    text: "Quel service est le meilleur point d'entree pour ouvrir un cas de support sur une panne de production ?",
+    options: ["AWS Support Center", "AWS Config", "Amazon EventBridge", "AWS Backup"],
     correctIndex: 0,
-    explanation: "AWS Organizations aide a gerer plusieurs comptes et a appliquer des policies communes.",
+    explanation: "AWS Support Center permet de creer et suivre des cas de support selon votre plan.",
     category: "AWS"
   },
   {
     id: "s2-aws-19",
-    text: "Sur EC2, qui est responsable de patcher le systeme d'exploitation dans le modele partage ?",
-    options: ["AWS", "Le client", "Le fournisseur de la base de donnees", "Personne"],
+    text: "Quel plan de support AWS donne acces a un Technical Account Manager et a des conseils proactifs ?",
+    options: ["Enterprise Support", "Basic Support", "Free Tier", "Developer Support"],
     correctIndex: 1,
-    explanation: "Dans le modele de responsabilite partagee, le client gere l'OS et les applications sur EC2.",
+    explanation: "Le plan Enterprise Support inclut un TAM et des fonctions avancees pour les grosses organisations.",
     category: "AWS"
   },
   {
     id: "s2-aws-20",
-    text: "Quelle option est adaptee a une charge stable avec engagement pour reduire la facture ?",
-    options: ["Savings Plans ou Reserved Instances", "Spot Instances", "On-Demand uniquement", "Free Tier"],
+    text: "Quel service permet de chiffrer les donnees dans AWS avec des cles gerees ?",
+    options: ["AWS KMS", "AWS WAF", "Amazon Route 53", "AWS Direct Connect"],
     correctIndex: 0,
-    explanation: "Savings Plans et Reserved Instances offrent des remises contre un engagement de consommation.",
+    explanation: "AWS KMS fournit des cles de chiffrement gerees et integrees a de nombreux services AWS.",
     category: "AWS"
   },
   {
     id: "s2-aws-21-hard",
-    text: "[DIFFICILE] Quel est le principal inconvenient d'une Lambda executee dans un VPC ?",
-    options: ["Un cold start plus lent", "Plus aucun acces au reseau", "Un cout 100x plus eleve", "Une obligation de gerer manuellement le scale"],
+    text: "[DIFFICILE] Sur un Security Group, quelle affirmation est vraie ?",
+    options: ["Il est stateful", "Il est applique au niveau du VPC entier", "Il est toujours stateless", "Il ne peut pas etre associe a une instance"],
     correctIndex: 0,
-    explanation: "Une Lambda dans un VPC peut avoir un demarrage plus lent a cause de l'attache reseau.",
+    explanation: "Un Security Group est stateful et s'applique aux interfaces reseau des ressources.",
     category: "AWS"
   },
   {
     id: "s2-aws-22-ultra-hard",
-    text: "[ULTRA-DIFFICILE] Quel service permet de sauvegarder et restaurer des donnees AWS de facon centralisee ?",
-    options: ["AWS Backup", "AWS Budgets", "Amazon QuickSight", "AWS IoT Core"],
+    text: "[ULTRA-DIFFICILE] Quel mecanisme permet a un VPC dans un compte A d'atteindre un VPC dans un compte B sans utiliser Internet ?",
+    options: ["VPC Peering", "Amazon S3", "AWS Budgets", "AWS Artifact"],
     correctIndex: 0,
-    explanation: "AWS Backup centralise la planification, la conservation et la restauration des sauvegardes.",
+    explanation: "Le VPC Peering relie deux VPC de facon privee, mais il est non transitif et demande des routes explicites.",
     category: "AWS"
   },
   {
     id: "s2-aws-23-super-hard",
-    text: "[SUPER-DIFFICILE] Une action est autorisee par IAM mais refusee explicitement par une SCP. Quel est le resultat ?",
-    options: ["L'action est autorisee", "Le deny explicite de la SCP gagne", "Le resultat depend de la region", "IAM Prime sur la SCP"],
+    text: "[SUPER-DIFFICILE] Dans le modele de responsabilite partagee, qui est responsable des correctifs du systeme d'exploitation sur une instance EC2 ?",
+    options: ["Le client", "AWS", "Le fournisseur de la base de donnees", "AWS Shield"],
     correctIndex: 1,
-    explanation: "Un deny explicite bloque toujours l'action, et une SCP definit la limite maximale des permissions.",
+    explanation: "Sur EC2, le client gere l'OS, les patchs et l'application; AWS gere l'infrastructure sous-jacente.",
     category: "AWS"
   },
   {
     id: "s2-aws-24",
-    text: "Quel service detecte des menaces en continu en analysant differents signaux de securite ?",
-    options: ["Amazon GuardDuty", "AWS Cost Explorer", "Amazon Athena", "AWS Snowcone"],
+    text: "Quel service aide a surveiller des metriques et a declencher des alarmes sur un comportement anormal ?",
+    options: ["Amazon CloudWatch", "AWS Firewall Manager", "AWS Direct Connect", "AWS IAM"],
     correctIndex: 0,
-    explanation: "Amazon GuardDuty detecte des menaces grace a l'analyse de signaux comme CloudTrail et les logs reseau.",
+    explanation: "Amazon CloudWatch regroupe metriques, logs, alarmes et dashboards de supervision.",
     category: "AWS"
   },
   {
     id: "s2-aws-25",
-    text: "Quel service agrège les alertes et findings de securite sur plusieurs services AWS ?",
-    options: ["AWS Security Hub", "AWS Artifact", "Amazon Inspector", "AWS WAF"],
+    text: "Quel service centralise les findings de securite venant de plusieurs outils AWS ?",
+    options: ["AWS Security Hub", "AWS Budgets", "Amazon Route 53", "Amazon EFS"],
     correctIndex: 0,
-    explanation: "AWS Security Hub centralise et normalise les findings de securite pour simplifier le suivi.",
+    explanation: "AWS Security Hub regroupe et normalise les alertes de securite pour une vue centralisee.",
     category: "AWS"
   },
   {
     id: "s2-aws-26",
-    text: "Quel service fournit des certificats SSL/TLS geres pour les applications AWS ?",
-    options: ["AWS Certificate Manager", "AWS KMS", "AWS IAM Identity Center", "Amazon Route 53"],
+    text: "Quel service permet de gerer automatiquement des certificats SSL/TLS pour des applications AWS compatibles ?",
+    options: ["AWS Certificate Manager", "AWS KMS", "AWS Config", "Amazon Inspector"],
     correctIndex: 0,
-    explanation: "AWS Certificate Manager (ACM) emet et renouvelle des certificats utilises avec des services AWS compatibles.",
+    explanation: "AWS Certificate Manager (ACM) emet et renouvelle les certificats utilises par des services compatibles.",
     category: "AWS"
   },
   {
     id: "s2-aws-27",
-    text: "Quel service cree un reseau virtuel isole dans AWS ?",
-    options: ["Amazon VPC", "AWS Organizations", "Amazon S3", "AWS Lambda"],
+    text: "Quel service permet d'exposer un service prive a d'autres comptes sans ouvrir de ports publics ?",
+    options: ["AWS PrivateLink", "Amazon SQS", "AWS Backup", "Amazon CloudFront"],
     correctIndex: 0,
-    explanation: "Amazon VPC permet de definir un reseau prive virtuel avec sous-reseaux, routes et controles de securite.",
+    explanation: "AWS PrivateLink permet une exposition privee de services via des endpoints sans Internet public.",
     category: "AWS"
   },
   {
     id: "s2-aws-28",
-    text: "Quel service permet d'acceder a des services AWS de facon privee sans passer par Internet public ?",
-    options: ["AWS PrivateLink", "Amazon CloudFront", "AWS Outposts", "AWS Snowball"],
+    text: "Quel service AWS vous aide a obtenir des recommandations de bonnes pratiques, notamment en securite et en cout ?",
+    options: ["AWS Trusted Advisor", "Amazon Textract", "AWS Glue", "Amazon ECR"],
     correctIndex: 0,
-    explanation: "AWS PrivateLink fournit un acces prive a des services via des endpoints dans le reseau AWS.",
+    explanation: "AWS Trusted Advisor fournit des recommandations de bonnes pratiques sur la securite, le cout, la fiabilite et les limites.",
     category: "AWS"
   },
   {
     id: "s2-aws-29",
-    text: "Quel service orchestre des conteneurs sans vous demander de gerer directement les serveurs ?",
-    options: ["Amazon ECS avec Fargate", "Amazon EBS", "AWS IAM", "AWS Backup"],
+    text: "Quel service permet de surveiller la conformite d'une ressource par rapport a des regles de configuration ?",
+    options: ["AWS Config", "Amazon S3", "AWS VPN", "AWS WAF"],
     correctIndex: 0,
-    explanation: "Avec ECS et Fargate, AWS prend en charge la couche d'infrastructure pour les conteneurs.",
+    explanation: "AWS Config enregistre l'etat des ressources et peut evaluer leur conformite via des regles.",
     category: "AWS"
   },
   {
     id: "s2-aws-30",
-    text: "Quel service stocke des images de conteneurs Docker de maniere geree ?",
-    options: ["Amazon ECR", "Amazon EFS", "Amazon S3", "AWS Config"],
+    text: "Quel service sert a administrer des regles de pare-feu reseau sur plusieurs comptes AWS de facon centralisee ?",
+    options: ["AWS Firewall Manager", "Amazon Macie", "AWS Glue", "Amazon Athena"],
     correctIndex: 0,
-    explanation: "Amazon ECR est le registre gere d'images de conteneurs pour ECS, EKS et autres environnements.",
+    explanation: "AWS Firewall Manager centralise la gestion des politiques de securite comme WAF, Shield et Security Groups.",
     category: "AWS"
   },
   {
     id: "s2-aws-31",
-    text: "Quel service permet d'interroger des donnees dans S3 avec SQL sans serveur ?",
-    options: ["Amazon Athena", "Amazon RDS", "AWS Glue Studio", "AWS Step Functions"],
+    text: "Quel service est adapte pour analyser des requetes DNS ou des journaux en quasi temps reel a l'aide d'un langage de requete ?",
+    options: ["CloudWatch Logs Insights", "Amazon EBS", "AWS Backup", "AWS Artifact"],
     correctIndex: 0,
-    explanation: "Amazon Athena interroge directement les donnees stockees dans S3 avec un modele serverless et SQL.",
+    explanation: "CloudWatch Logs Insights permet de requeter rapidement des logs pour le diagnostic et l'analyse.",
     category: "AWS"
   }
 ];
@@ -325,34 +325,34 @@ const awsQuestions = [
 const funQuestions = [
   {
     id: "s2-fun-0",
-    text: "Tu veux une API simple sans gerer de serveurs ni de patching. Le duo le plus naturel ?",
-    options: ["Lambda + API Gateway", "EC2 + Apache", "RDS + ElastiCache", "S3 + Glacier"],
+    text: "Tu dois expliquer a ton equipe qu'une connexion VPN n'est pas la meme chose qu'un lien dedie. Lequel est le plus simple a retenir ?",
+    options: ["VPN = tunnel chiffre sur Internet", "VPN = fibre privee AWS", "VPN = base de donnees", "VPN = bucket S3"],
     correctIndex: 0,
-    explanation: "Lambda et API Gateway couvrent tres bien les APIs serverless avec peu d'operations a maintenir.",
+    explanation: "Un VPN AWS est un tunnel chiffre sur Internet; Direct Connect est la liaison reseau dediee.",
     category: "Fun"
   },
   {
     id: "s2-fun-1",
-    text: "Tu veux un site statique avec HTTPS, un domaine perso et un minimum de bricolage. Quel combo choisiras-tu ?",
-    options: ["S3 + CloudFront + Route 53 + ACM", "EC2 seul", "RDS Multi-AZ", "Lambda sans stockage"],
+    text: "Tu dois isoler proprement des applis entre prod et dev dans le meme compte AWS. Le plus logique ?",
+    options: ["Deux VPC avec des Security Groups separés", "Un seul subnet public pour tout", "Tout mettre dans le meme SG", "Supprimer les ACL reseau"],
     correctIndex: 0,
-    explanation: "S3 heberge, CloudFront accelere, Route 53 gere le DNS et ACM fournit le certificat HTTPS.",
+    explanation: "Des VPC et des groupes de securite distincts permettent d'isoler les flux de facon claire et maintenable.",
     category: "Fun"
   },
   {
     id: "s2-fun-2",
-    text: "Deux applis doivent echanger des messages sans se bloquer mutuellement. Le service le plus simple pour ca ?",
-    options: ["Amazon SQS", "Amazon CloudFront", "AWS Budgets", "AWS WAF"],
+    text: "Ton equipe doit verifier une panne reseau en urgence. Quel service te donnera d'abord une vision des metriques et des alarmes ?",
+    options: ["Amazon CloudWatch", "AWS Budget", "AWS Support Center", "Amazon ECR"],
     correctIndex: 0,
-    explanation: "Amazon SQS absorbe les pics et decouple proprement le producteur du consommateur.",
+    explanation: "CloudWatch est le premier endroit pour voir metriques, logs et alarmes lors d'un incident.",
     category: "Fun"
   },
   {
     id: "s2-fun-3",
-    text: "Tu veux donner un acces propre a plusieurs comptes avec SSO et une gouvernance centrale. Tu prends quoi ?",
-    options: ["IAM Identity Center", "S3 Glacier", "AWS Snowcone", "Amazon Textract"],
+    text: "Tu veux un support plus solide qu'un simple ticket mail et quelqu'un qui t'accompagne sur le long terme. Tu regardes quel niveau ?",
+    options: ["Enterprise Support", "Basic Support", "AWS Free Tier", "Amazon SES"],
     correctIndex: 0,
-    explanation: "IAM Identity Center permet un acces centralise et plus propre que les comptes partages a la main.",
+    explanation: "Enterprise Support est le plan le plus avance pour les besoins critiques et l'accompagnement proactif.",
     category: "Fun"
   }
 ];
