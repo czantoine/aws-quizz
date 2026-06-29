@@ -112,7 +112,10 @@ socket.on("question:start", (payload) => {
   submitAnswerButton = null;
   currentMinSelections = Number(payload.minSelections || 1);
   hidePlayerFire();
-  answerState.textContent = `Coche au moins ${currentMinSelections} reponse(s), puis valide.`;
+  answerState.textContent =
+    currentMinSelections > 1
+      ? `Coche au moins ${currentMinSelections} reponse(s), puis valide.`
+      : "Choisis une reponse.";
   reviewResult.textContent = "";
   reviewCorrect.textContent = "";
 
@@ -127,67 +130,86 @@ socket.on("question:start", (payload) => {
   }
 
   answersGrid.innerHTML = "";
-  const hint = document.createElement("p");
-  hint.className = "muted answer-hint";
-  hint.textContent = `Selection minimale: ${currentMinSelections}`;
-  answersGrid.appendChild(hint);
+  if (currentMinSelections <= 1) {
+    payload.options.forEach((option, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "answer-btn";
+      button.textContent = option;
+      button.addEventListener("click", () => {
+        if (questionLocked) {
+          return;
+        }
 
-  const choicesWrap = document.createElement("div");
-  choicesWrap.className = "answer-options";
-  payload.options.forEach((option, index) => {
-    const label = document.createElement("label");
-    label.className = "answer-choice";
+        questionLocked = true;
+        lockAnswerButtons();
+        socket.emit("player:answer", { answerIndex: index });
+      });
+      answersGrid.appendChild(button);
+    });
+  } else {
+    const hint = document.createElement("p");
+    hint.className = "muted answer-hint";
+    hint.textContent = `Selection minimale: ${currentMinSelections}`;
+    answersGrid.appendChild(hint);
 
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.value = String(index);
-    checkbox.addEventListener("change", () => {
+    const choicesWrap = document.createElement("div");
+    choicesWrap.className = "answer-options";
+    payload.options.forEach((option, index) => {
+      const label = document.createElement("label");
+      label.className = "answer-choice";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = String(index);
+      checkbox.addEventListener("change", () => {
+        if (questionLocked) {
+          checkbox.checked = false;
+          return;
+        }
+
+        if (checkbox.checked) {
+          selectedAnswerIndices.add(index);
+        } else {
+          selectedAnswerIndices.delete(index);
+        }
+
+        updateSubmitButtonState();
+      });
+
+      const text = document.createElement("span");
+      text.textContent = option;
+
+      label.append(checkbox, text);
+      choicesWrap.appendChild(label);
+    });
+
+    answersGrid.appendChild(choicesWrap);
+
+    const actionRow = document.createElement("div");
+    actionRow.className = "answer-action-row";
+    submitAnswerButton = document.createElement("button");
+    submitAnswerButton.type = "button";
+    submitAnswerButton.className = "answer-submit";
+    submitAnswerButton.addEventListener("click", () => {
       if (questionLocked) {
-        checkbox.checked = false;
         return;
       }
 
-      if (checkbox.checked) {
-        selectedAnswerIndices.add(index);
-      } else {
-        selectedAnswerIndices.delete(index);
+      const answerIndices = [...selectedAnswerIndices].sort((a, b) => a - b);
+      if (answerIndices.length < currentMinSelections) {
+        answerState.textContent = `Coche au moins ${currentMinSelections} reponse(s).`;
+        return;
       }
 
-      updateSubmitButtonState();
+      questionLocked = true;
+      lockAnswerButtons();
+      socket.emit("player:answer", { answerIndices });
     });
-
-    const text = document.createElement("span");
-    text.textContent = option;
-
-    label.append(checkbox, text);
-    choicesWrap.appendChild(label);
-  });
-
-  answersGrid.appendChild(choicesWrap);
-
-  const actionRow = document.createElement("div");
-  actionRow.className = "answer-action-row";
-  submitAnswerButton = document.createElement("button");
-  submitAnswerButton.type = "button";
-  submitAnswerButton.className = "answer-submit";
-  submitAnswerButton.addEventListener("click", () => {
-    if (questionLocked) {
-      return;
-    }
-
-    const answerIndices = [...selectedAnswerIndices].sort((a, b) => a - b);
-    if (answerIndices.length < currentMinSelections) {
-      answerState.textContent = `Coche au moins ${currentMinSelections} reponse(s).`;
-      return;
-    }
-
-    questionLocked = true;
-    lockAnswerButtons();
-    socket.emit("player:answer", { answerIndices });
-  });
-  actionRow.appendChild(submitAnswerButton);
-  answersGrid.appendChild(actionRow);
-  updateSubmitButtonState();
+    actionRow.appendChild(submitAnswerButton);
+    answersGrid.appendChild(actionRow);
+    updateSubmitButtonState();
+  }
 
   startCountdown(payload.startedAt, payload.durationSeconds);
   showOnly(questionCard);
