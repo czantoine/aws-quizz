@@ -434,7 +434,18 @@ function buildQuiz() {
     "s2-aws-7"
   ]);
   const curatedAws = awsQuestions.filter((question) => !removedEasyIds.has(question.id));
-  const mixedAws = [...curatedAws, ...advancedMultiQuestions];
+  const mixedAws = [];
+  const chunkCount = advancedMultiQuestions.length + 1;
+
+  for (let i = 0; i < chunkCount; i += 1) {
+    const start = Math.floor((i * curatedAws.length) / chunkCount);
+    const end = Math.floor(((i + 1) * curatedAws.length) / chunkCount);
+    mixedAws.push(...curatedAws.slice(start, end));
+
+    if (i < advancedMultiQuestions.length) {
+      mixedAws.push(advancedMultiQuestions[i]);
+    }
+  }
 
   return [
     funQuestions[0],
